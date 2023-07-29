@@ -1,4 +1,4 @@
-package dao
+package memory
 
 import (
 	"sync"

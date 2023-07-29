@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/jun-chiang/go-web-demo1/dao"
+	"github.com/jun-chiang/go-web-demo1/dao/memory"
 	"github.com/jun-chiang/go-web-demo1/entity"
 )
 
@@ -67,7 +68,7 @@ func (f *QueryPageInfoFlow) prepareInfo() error {
 	// 获取Topic的信息
 	go func() {
 		defer wg.Done()
-		var topicDao dao.TopicDao = dao.NewTopicDaoImplInstance()
+		var topicDao dao.TopicDao = memory.NewTopicDaoImplInstance()
 		topic, err := topicDao.QueryTopicById(f.topicId)
 		if err != nil {
 			topicErr = err
@@ -79,7 +80,7 @@ func (f *QueryPageInfoFlow) prepareInfo() error {
 	go func() {
 		defer wg.Done()
 		// 利用接口实现多态
-		var postDao dao.PostDao = dao.NewPostDaoImplInstance()
+		var postDao dao.PostDao = memory.NewPostDaoImplInstance()
 		postList, err := postDao.QueryPostListByTopicId(f.topicId)
 		if err != nil {
 			postErr = err

@@ -1,4 +1,4 @@
-package dao
+package memory
 
 import (
 	"github.com/jun-chiang/go-web-demo1/entity"
