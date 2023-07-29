@@ -15,15 +15,15 @@ type Post = entity.Post
 // 存储数据的变量
 var (
 	// 定义话题索引
-	TopicIndexMap map[uint64]*Topic
+	TopicIndexMap map[uint64]*Topic = make(map[uint64]*Topic, 5)
 	// 定义并初始化话题回复索引
 	PostIndexMap map[uint64][]*Post = make(map[uint64][]*entity.Post, 5)
 )
 
 // 从文件初始话题索引
-func initTopicIndexMap() error {
+func InitTopicIndexMap() error {
 	// 读取json文件
-	jsonFile, err := os.Open("initial_data.json")
+	jsonFile, err := os.Open("repository/initial_data.json")
 	if err != nil {
 		return err
 	}
@@ -36,9 +36,10 @@ func initTopicIndexMap() error {
 		return err
 	}
 	// json反序列化
-	json.Unmarshal(byteValue, &topics)
-	// 初始化话题索引变量
-	TopicIndexMap = make(map[uint64]*Topic, 5)
+	err = json.Unmarshal(byteValue, &topics)
+	if err != nil {
+		return err
+	}
 	for i := range topics {
 		topic := topics[i]
 		// 以ID为key，把对象指针放到Map里面去
