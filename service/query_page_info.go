@@ -6,13 +6,14 @@ import (
 	"sync"
 
 	"github.com/jun-chiang/go-web-demo1/dao"
+	"github.com/jun-chiang/go-web-demo1/dao/database"
 	"github.com/jun-chiang/go-web-demo1/dao/memory"
 	"github.com/jun-chiang/go-web-demo1/entity"
 )
 
 type QueryPageInfoFlow struct {
 	topicIdStr string
-	topicId    uint64
+	topicId    uint
 	PageInfo   *entity.PageInfo
 	topic      *entity.Topic
 	postList   []*entity.Post
@@ -56,7 +57,7 @@ func (f *QueryPageInfoFlow) checkParam() error {
 	if topicId <= 0 {
 		return errors.New("topic id must larger than 0")
 	}
-	f.topicId = topicId
+	f.topicId = uint(topicId)
 	return nil
 }
 
@@ -68,7 +69,7 @@ func (f *QueryPageInfoFlow) prepareInfo() error {
 	// 获取Topic的信息
 	go func() {
 		defer wg.Done()
-		var topicDao dao.TopicDao = memory.NewTopicDaoImplInstance()
+		var topicDao dao.TopicDao = database.NewTopicDaoImplInstance()
 		topic, err := topicDao.QueryTopicById(f.topicId)
 		if err != nil {
 			topicErr = err
