@@ -29,6 +29,6 @@ func NewTopicDaoImplInstance() *TopicDaoImpl {
 }
 
 // 实现Topic_dao的方法
-func (*TopicDaoImpl) QueryTopicById(id uint64) (*entity.Topic, error) {
+func (*TopicDaoImpl) QueryTopicById(id uint) (*entity.Topic, error) {
 	return repository.TopicIndexMap[id], nil
 }

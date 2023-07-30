@@ -23,6 +23,6 @@ func NewPostDaoImplInstance() *PostDaoImpl {
 }
 
 // 实现Topic_dao的方法
-func (*PostDaoImpl) QueryPostListByTopicId(id uint64) ([]*entity.Post, error) {
+func (*PostDaoImpl) QueryPostListByTopicId(id uint) ([]*entity.Post, error) {
 	return repository.PostIndexMap[id], nil
 }
