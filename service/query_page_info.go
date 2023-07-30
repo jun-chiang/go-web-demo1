@@ -7,7 +7,6 @@ import (
 
 	"github.com/jun-chiang/go-web-demo1/dao"
 	"github.com/jun-chiang/go-web-demo1/dao/database"
-	"github.com/jun-chiang/go-web-demo1/dao/memory"
 	"github.com/jun-chiang/go-web-demo1/entity"
 )
 
@@ -81,7 +80,7 @@ func (f *QueryPageInfoFlow) prepareInfo() error {
 	go func() {
 		defer wg.Done()
 		// 利用接口实现多态
-		var postDao dao.PostDao = memory.NewPostDaoImplInstance()
+		var postDao dao.PostDao = database.NewPostDaoImplInstance()
 		postList, err := postDao.QueryPostListByTopicId(f.topicId)
 		if err != nil {
 			postErr = err
