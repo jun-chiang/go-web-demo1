@@ -1,8 +1,10 @@
 package entity
 
+import "gorm.io/gorm"
+
 // 主题结构体
 type Topic struct {
-	Id         uint64
+	gorm.Model
 	Title      string
 	Content    string
 	CreateTime MyTime

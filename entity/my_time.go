@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"database/sql/driver"
 	"fmt"
 	"time"
 )
@@ -26,4 +27,29 @@ func (t *MyTime) UnmarshalJSON(b []byte) error {
 	}
 	t.Time = newTime
 	return nil
+}
+
+func (t MyTime) Value() (driver.Value, error) {
+	return t.Format(myTimeFormat), nil
+}
+
+func (t *MyTime) Scan(value interface{}) error {
+	switch v := value.(type) {
+	case []byte:
+		newTime, err := time.Parse(myTimeFormat, string(v))
+		if err != nil {
+			return err
+		}
+		*t = MyTime{newTime}
+		return nil
+	case string:
+		newTime, err := time.Parse(myTimeFormat, v)
+		if err != nil {
+			return err
+		}
+		*t = MyTime{newTime}
+		return nil
+	default:
+		return fmt.Errorf("not a time value")
+	}
 }

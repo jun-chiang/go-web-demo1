@@ -15,9 +15,9 @@ type Post = entity.Post
 // 存储数据的变量
 var (
 	// 定义话题索引
-	TopicIndexMap map[uint64]*Topic = make(map[uint64]*Topic, 5)
+	TopicIndexMap map[uint]*Topic = make(map[uint]*Topic, 5)
 	// 定义并初始化话题回复索引
-	PostIndexMap map[uint64][]*Post = make(map[uint64][]*entity.Post, 5)
+	PostIndexMap map[uint][]*Post = make(map[uint][]*entity.Post, 5)
 )
 
 // 从文件初始话题索引
@@ -43,7 +43,7 @@ func InitTopicIndexMap() error {
 	for i := range topics {
 		topic := topics[i]
 		// 以ID为key，把对象指针放到Map里面去
-		TopicIndexMap[topic.Id] = &topic
+		TopicIndexMap[topic.ID] = &topic
 	}
 	return nil
 }

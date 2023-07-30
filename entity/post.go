@@ -1,9 +1,11 @@
 package entity
 
+import "gorm.io/gorm"
+
 // 主题下面的回复
 type Post struct {
-	Id         uint64
-	ParentId   uint64
+	gorm.Model
+	ParentId   uint
 	Content    string
 	CreateTime MyTime
 }
